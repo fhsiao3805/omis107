@@ -2,4 +2,3 @@ Here are some notes for this project.
 hello
 hellow
 hello
-hi

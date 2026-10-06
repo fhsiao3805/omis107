@@ -177,6 +177,9 @@
                     <button id="resetBoardBtn" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-emerald-50 font-semibold text-xs transition-all shadow active:scale-95 flex items-center justify-center gap-1.5">
                         <i class="fas fa-redo-alt"></i> Reset Board
                     </button>
+                    <button id="resignBtn" class="flex-1 py-2.5 px-3 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 font-semibold text-xs transition-all active:scale-95 flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed" title="Forfeit this round">
+                        <i class="fas fa-flag"></i> Resign
+                    </button>
                     <button id="resetMatchBtn" class="py-2.5 px-3 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 font-semibold text-xs transition-all active:scale-95 flex items-center justify-center" title="Reset Scores & Game">
                         <i class="fas fa-trash-alt"></i>
                     </button>
@@ -346,6 +349,7 @@
         // Buttons DOM
         const resetBoardBtn = document.getElementById('resetBoardBtn');
         const resetMatchBtn = document.getElementById('resetMatchBtn');
+        const resignBtn = document.getElementById('resignBtn');
         const soundToggleBtn = document.getElementById('soundToggleBtn');
         const soundIcon = document.getElementById('soundIcon');
         const themeToggleBtn = document.getElementById('themeToggleBtn');
@@ -446,6 +450,7 @@
         // Handle Victory state
         function handleWin(winCombo) {
             state.isGameActive = false;
+            resignBtn.disabled = true;
             const winner = state.currentPlayer;
             state.scores[winner]++;
             updateScoresUI();
@@ -471,6 +476,7 @@
         // Handle Draw state
         function handleDraw() {
             state.isGameActive = false;
+            resignBtn.disabled = true;
             state.scores.ties++;
             updateScoresUI();
             sfx.playDraw();
@@ -478,6 +484,22 @@
             setTimeout(() => {
                 showModal("It's a Draw!", "Nobody won this round. Ready for a rematch?", 'TIE');
             }, 400);
+        }
+
+        function resignGame() {
+            if (!state.isGameActive) return;
+
+            const resignedPlayer = state.currentPlayer;
+            const winner = resignedPlayer === 'X' ? 'O' : 'X';
+            state.isGameActive = false;
+            resignBtn.disabled = true;
+            state.scores[winner]++;
+            updateScoresUI();
+            showModal(
+                `${state.playerNames[winner]} Wins!`,
+                `${state.playerNames[resignedPlayer]} resigned.`,
+                winner
+            );
         }
 
         // Update Turn Indicator UI
@@ -559,6 +581,7 @@
         function resetBoard() {
             state.board = Array(9).fill(null);
             state.isGameActive = true;
+            resignBtn.disabled = false;
             state.moveHistory = [];
             state.currentPlayer = 'X';
 
@@ -624,6 +647,7 @@
         // Action Buttons Event Listeners
         resetBoardBtn.addEventListener('click', resetBoard);
         resetMatchBtn.addEventListener('click', resetMatch);
+        resignBtn.addEventListener('click', resignGame);
         modalNextRoundBtn.addEventListener('click', resetBoard);
         modalCloseBtn.addEventListener('click', hideModal);
         soundToggleBtn.addEventListener('click', toggleSound);

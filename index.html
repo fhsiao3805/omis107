@@ -105,6 +105,16 @@
 
     <!-- Main Content Container -->
     <main class="w-full max-w-4xl mx-auto px-4 py-2 flex-grow flex flex-col justify-center items-center gap-6">
+
+        <!-- Game Mode Selection -->
+        <div class="flex items-center gap-2 rounded-2xl border border-emerald-800/60 bg-emerald-900/40 p-1.5" role="group" aria-label="Choose game mode">
+            <button id="localModeBtn" type="button" aria-pressed="true" class="px-4 py-2 rounded-xl bg-emerald-700 text-emerald-50 text-sm font-semibold transition-all">
+                <i class="fas fa-user-group mr-2" aria-hidden="true"></i>2 Players
+            </button>
+            <button id="computerModeBtn" type="button" aria-pressed="false" class="px-4 py-2 rounded-xl text-emerald-300 hover:bg-emerald-800/70 text-sm font-semibold transition-all">
+                <i class="fas fa-robot mr-2" aria-hidden="true"></i>Play Computer
+            </button>
+        </div>
         
         <!-- Scoreboard & Players Section -->
         <div class="w-full grid grid-cols-3 gap-3 md:gap-6 items-center">
@@ -188,7 +198,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full text-center py-4 text-xs text-emerald-400">
+    <footer id="gameFooter" class="w-full text-center py-4 text-xs text-emerald-400">
         Tic-Tac-Toe • 2 Players Local Gameplay
     </footer>
 
@@ -224,7 +234,8 @@
             isGameActive: true,
             moveHistory: [],
             soundEnabled: true,
-            theme: 'dark'
+            theme: 'dark',
+            mode: 'local'
         };
 
         // Winning Combinations
@@ -325,6 +336,9 @@
         const playerOCard = document.getElementById('playerOCard');
         const playerXNameInput = document.getElementById('playerXName');
         const playerONameInput = document.getElementById('playerOName');
+        const localModeBtn = document.getElementById('localModeBtn');
+        const computerModeBtn = document.getElementById('computerModeBtn');
+        const gameFooter = document.getElementById('gameFooter');
         const scoreXEl = document.getElementById('scoreX');
         const scoreOEl = document.getElementById('scoreO');
         const scoreTiesEl = document.getElementById('scoreTies');
@@ -366,36 +380,108 @@
 
         // Handle User Click on Cell
         function handleCellClick(index) {
+            if (state.mode === 'computer' && state.currentPlayer === 'O') return;
+            playMove(index);
+        }
+
+        function playMove(index) {
             if (state.board[index] !== null || !state.isGameActive) return;
 
-            // Make Move
             state.board[index] = state.currentPlayer;
             const cell = boardEl.children[index];
-            
-            // Play Audio
             sfx.playClick(state.currentPlayer);
-
-            // Render Mark with Animation
             renderCell(cell, state.currentPlayer);
 
-            // Record History
             const row = Math.floor(index / 3) + 1;
             const col = (index % 3) + 1;
             const moveText = `${state.playerNames[state.currentPlayer]} (${state.currentPlayer}) -> Row ${row}, Col ${col}`;
             state.moveHistory.push({ player: state.currentPlayer, moveText });
             updateMoveLog();
 
-            // Check Win or Draw
             const winCombo = checkWin();
             if (winCombo) {
                 handleWin(winCombo);
             } else if (state.board.every(cell => cell !== null)) {
                 handleDraw();
             } else {
-                // Switch Turn
                 state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
                 updateTurnUI();
+                if (state.mode === 'computer' && state.currentPlayer === 'O') {
+                    setTimeout(playComputerTurn, 350);
+                }
             }
+        }
+
+        function playComputerTurn() {
+            if (state.mode !== 'computer' || state.currentPlayer !== 'O' || !state.isGameActive) return;
+            const move = chooseComputerMove();
+            if (move !== null) playMove(move);
+        }
+
+        function chooseComputerMove() {
+            const availableMoves = state.board
+                .map((cell, index) => cell === null ? index : null)
+                .filter(index => index !== null);
+            if (availableMoves.length === 0) return null;
+
+            let bestScore = -Infinity;
+            let bestMoves = [];
+            for (const move of availableMoves) {
+                const board = [...state.board];
+                board[move] = 'O';
+                const score = minimax(board, false, 1);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMoves = [move];
+                } else if (score === bestScore) {
+                    bestMoves.push(move);
+                }
+            }
+            return bestMoves[Math.floor(Math.random() * bestMoves.length)];
+        }
+
+        function minimax(board, isComputerTurn, depth) {
+            const winningCombo = WINNING_COMBOS.find(([a, b, c]) =>
+                board[a] && board[a] === board[b] && board[a] === board[c]
+            );
+            if (winningCombo) return board[winningCombo[0]] === 'O' ? 10 - depth : depth - 10;
+            if (board.every(cell => cell !== null)) return 0;
+
+            let bestScore = isComputerTurn ? -Infinity : Infinity;
+            for (let index = 0; index < board.length; index++) {
+                if (board[index] !== null) continue;
+                board[index] = isComputerTurn ? 'O' : 'X';
+                const score = minimax(board, !isComputerTurn, depth + 1);
+                board[index] = null;
+                bestScore = isComputerTurn ? Math.max(bestScore, score) : Math.min(bestScore, score);
+            }
+            return bestScore;
+        }
+
+        function setGameMode(mode) {
+            if (state.mode === mode) return;
+            state.mode = mode;
+            resetMatch();
+            updateModeUI();
+        }
+
+        function updateModeUI() {
+            const computerMode = state.mode === 'computer';
+            localModeBtn.setAttribute('aria-pressed', String(!computerMode));
+            computerModeBtn.setAttribute('aria-pressed', String(computerMode));
+            localModeBtn.className = computerMode
+                ? 'px-4 py-2 rounded-xl text-emerald-300 hover:bg-emerald-800/70 text-sm font-semibold transition-all'
+                : 'px-4 py-2 rounded-xl bg-emerald-700 text-emerald-50 text-sm font-semibold transition-all';
+            computerModeBtn.className = computerMode
+                ? 'px-4 py-2 rounded-xl bg-emerald-700 text-emerald-50 text-sm font-semibold transition-all'
+                : 'px-4 py-2 rounded-xl text-emerald-300 hover:bg-emerald-800/70 text-sm font-semibold transition-all';
+            playerONameInput.disabled = computerMode;
+            playerONameInput.value = computerMode ? 'Computer' : state.playerNames.O;
+            playerONameInput.classList.toggle('cursor-not-allowed', computerMode);
+            playerONameInput.classList.toggle('opacity-70', computerMode);
+            gameFooter.textContent = computerMode
+                ? 'Tic-Tac-Toe • Play against the computer'
+                : 'Tic-Tac-Toe • 2 Players Local Gameplay';
         }
 
         // Render Cell UI
@@ -624,6 +710,8 @@
         // Action Buttons Event Listeners
         resetBoardBtn.addEventListener('click', resetBoard);
         resetMatchBtn.addEventListener('click', resetMatch);
+        localModeBtn.addEventListener('click', () => setGameMode('local'));
+        computerModeBtn.addEventListener('click', () => setGameMode('computer'));
         modalNextRoundBtn.addEventListener('click', resetBoard);
         modalCloseBtn.addEventListener('click', hideModal);
         soundToggleBtn.addEventListener('click', toggleSound);

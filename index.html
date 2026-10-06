@@ -13,9 +13,9 @@
                 extend: {
                     colors: {
                         brand: {
-                            x: '#3B82F6', // Vibrant Blue
-                            o: '#EC4899', // Vibrant Pink
-                            accent: '#8B5CF6', // Purple Accent
+                            x: '#34D399',
+                            o: '#A3E635',
+                            accent: '#10B981',
                         }
                     },
                     fontFamily: {
@@ -79,12 +79,12 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col justify-between transition-colors duration-300">
+<body class="bg-emerald-950 text-emerald-50 dark:bg-emerald-950 dark:text-emerald-50 min-h-screen flex flex-col justify-between transition-colors duration-300">
 
     <!-- Header -->
     <header class="w-full max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-x to-brand-o flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-purple-500/20">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-x to-brand-o flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-emerald-500/20">
                 XO
             </div>
             <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-x via-brand-accent to-brand-o">
@@ -94,11 +94,11 @@
         
         <!-- Controls: Sound & Theme Toggle -->
         <div class="flex items-center gap-3">
-            <button id="soundToggleBtn" class="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-700 text-slate-300 transition-all shadow-md focus:outline-none" title="Toggle Sound">
+            <button id="soundToggleBtn" class="p-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 dark:bg-emerald-900 dark:hover:bg-emerald-800 border border-emerald-800 text-emerald-200 transition-all shadow-md focus:outline-none" title="Toggle Sound">
                 <i id="soundIcon" class="fas fa-volume-up text-lg"></i>
             </button>
-            <button id="themeToggleBtn" class="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-700 text-slate-300 transition-all shadow-md focus:outline-none" title="Toggle Dark/Light Mode">
-                <i id="themeIcon" class="fas fa-sun text-lg text-amber-400"></i>
+            <button id="themeToggleBtn" class="p-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 dark:bg-emerald-900 dark:hover:bg-emerald-800 border border-emerald-800 text-emerald-200 transition-all shadow-md focus:outline-none" title="Toggle Dark/Light Mode">
+                <i id="themeIcon" class="fas fa-sun text-lg text-lime-300"></i>
             </button>
         </div>
     </header>
@@ -110,36 +110,36 @@
         <div class="w-full grid grid-cols-3 gap-3 md:gap-6 items-center">
             
             <!-- Player X Card -->
-            <div id="playerXCard" class="p-4 rounded-2xl transition-all duration-300 border-2 border-brand-x/40 bg-slate-800/60 flex flex-col items-center justify-center relative overflow-hidden shadow-lg">
+            <div id="playerXCard" class="p-4 rounded-2xl transition-all duration-300 border-2 border-brand-x/40 bg-emerald-900/60 flex flex-col items-center justify-center relative overflow-hidden shadow-lg">
                 <div class="absolute top-0 left-0 w-full h-1 bg-brand-x"></div>
                 <div class="flex items-center gap-2 mb-1 w-full justify-center">
                     <span class="text-brand-x font-black text-xl">X</span>
-                    <input type="text" id="playerXName" value="Player 1" class="bg-transparent border-b border-transparent hover:border-slate-500 focus:border-brand-x focus:outline-none text-center font-semibold text-sm md:text-base text-slate-200 w-24 md:w-32 truncate" title="Click to rename">
-                    <i class="fas fa-pen text-xs text-slate-500 opacity-50"></i>
+                    <input type="text" id="playerXName" value="Player 1" class="bg-transparent border-b border-transparent hover:border-emerald-500 focus:border-brand-x focus:outline-none text-center font-semibold text-sm md:text-base text-emerald-100 w-24 md:w-32 truncate" title="Click to rename">
+                    <i class="fas fa-pen text-xs text-emerald-400 opacity-50"></i>
                 </div>
-                <div class="text-2xl md:text-4xl font-extrabold text-slate-100" id="scoreX">0</div>
-                <span class="text-xs text-slate-400 font-medium mt-1">WINS</span>
+                <div class="text-2xl md:text-4xl font-extrabold text-emerald-50" id="scoreX">0</div>
+                <span class="text-xs text-emerald-300 font-medium mt-1">WINS</span>
             </div>
 
             <!-- Ties / Game Info Center -->
-            <div class="p-3 rounded-2xl bg-slate-800/40 border border-slate-700/50 flex flex-col items-center justify-center text-center">
-                <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Ties</span>
-                <div class="text-xl md:text-3xl font-extrabold text-slate-300 my-1" id="scoreTies">0</div>
+            <div class="p-3 rounded-2xl bg-emerald-900/40 border border-emerald-800/50 flex flex-col items-center justify-center text-center">
+                <span class="text-xs font-bold tracking-wider text-emerald-300 uppercase">Ties</span>
+                <div class="text-xl md:text-3xl font-extrabold text-emerald-200 my-1" id="scoreTies">0</div>
                 <div id="turnBadge" class="mt-1 px-3 py-1 rounded-full text-xs font-bold bg-brand-x/20 text-brand-x border border-brand-x/30 flex items-center gap-1.5 transition-all duration-300">
                     <span id="turnSymbol" class="font-extrabold">X</span>'s Turn
                 </div>
             </div>
 
             <!-- Player O Card -->
-            <div id="playerOCard" class="p-4 rounded-2xl transition-all duration-300 border-2 border-transparent bg-slate-800/60 opacity-60 flex flex-col items-center justify-center relative overflow-hidden shadow-lg">
+            <div id="playerOCard" class="p-4 rounded-2xl transition-all duration-300 border-2 border-transparent bg-emerald-900/60 opacity-60 flex flex-col items-center justify-center relative overflow-hidden shadow-lg">
                 <div class="absolute top-0 left-0 w-full h-1 bg-brand-o"></div>
                 <div class="flex items-center gap-2 mb-1 w-full justify-center">
                     <span class="text-brand-o font-black text-xl">O</span>
-                    <input type="text" id="playerOName" value="Player 2" class="bg-transparent border-b border-transparent hover:border-slate-500 focus:border-brand-o focus:outline-none text-center font-semibold text-sm md:text-base text-slate-200 w-24 md:w-32 truncate" title="Click to rename">
-                    <i class="fas fa-pen text-xs text-slate-500 opacity-50"></i>
+                    <input type="text" id="playerOName" value="Player 2" class="bg-transparent border-b border-transparent hover:border-emerald-500 focus:border-brand-o focus:outline-none text-center font-semibold text-sm md:text-base text-emerald-100 w-24 md:w-32 truncate" title="Click to rename">
+                    <i class="fas fa-pen text-xs text-emerald-400 opacity-50"></i>
                 </div>
-                <div class="text-2xl md:text-4xl font-extrabold text-slate-100" id="scoreO">0</div>
-                <span class="text-xs text-slate-400 font-medium mt-1">WINS</span>
+                <div class="text-2xl md:text-4xl font-extrabold text-emerald-50" id="scoreO">0</div>
+                <span class="text-xs text-emerald-300 font-medium mt-1">WINS</span>
             </div>
         </div>
 
@@ -147,7 +147,7 @@
         <div class="flex flex-col lg:flex-row gap-6 items-start justify-center w-full">
             
             <!-- Game Board Container -->
-            <div class="relative mx-auto bg-slate-800/80 p-3 md:p-4 rounded-3xl border border-slate-700/80 shadow-2xl">
+            <div class="relative mx-auto bg-emerald-900/80 p-3 md:p-4 rounded-3xl border border-emerald-800/80 shadow-2xl">
                 <!-- 3x3 Grid -->
                 <div id="board" class="grid grid-cols-3 gap-2 md:gap-3 w-[290px] h-[290px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[420px]">
                     <!-- Cells dynamically generated via JavaScript -->
@@ -155,26 +155,26 @@
 
                 <!-- SVG Overlay for Win Line Rendering -->
                 <svg id="winLineSvg" class="absolute inset-0 w-full h-full pointer-events-none p-3 md:p-4 z-20" xmlns="http://www.w3.org/2000/svg">
-                    <line id="winLine" x1="0" y1="0" x2="0" y2="0" stroke="currentColor" stroke-width="8" stroke-linecap="round" class="hidden text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]" />
+                    <line id="winLine" x1="0" y1="0" x2="0" y2="0" stroke="currentColor" stroke-width="8" stroke-linecap="round" class="hidden text-lime-300 drop-shadow-[0_0_10px_rgba(190,242,100,0.8)]" />
                 </svg>
             </div>
 
             <!-- Move Log / Game History Sidebar -->
-            <div class="w-full lg:w-64 bg-slate-800/40 rounded-2xl border border-slate-700/50 p-4 flex flex-col h-[180px] lg:h-[452px]">
-                <div class="flex items-center justify-between border-b border-slate-700/60 pb-2 mb-2">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <div class="w-full lg:w-64 bg-emerald-900/40 rounded-2xl border border-emerald-800/50 p-4 flex flex-col h-[180px] lg:h-[452px]">
+                <div class="flex items-center justify-between border-b border-emerald-800/60 pb-2 mb-2">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-300 flex items-center gap-2">
                         <i class="fas fa-history"></i> Move History
                     </h3>
-                    <span id="moveCounter" class="text-xs font-semibold bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">0 Moves</span>
+                    <span id="moveCounter" class="text-xs font-semibold bg-emerald-800 text-emerald-200 px-2 py-0.5 rounded-full">0 Moves</span>
                 </div>
                 
-                <div id="moveLogList" class="flex-grow overflow-y-auto space-y-1.5 pr-1 text-xs md:text-sm font-medium text-slate-300">
-                    <div class="text-slate-500 italic text-center py-4">No moves yet</div>
+                <div id="moveLogList" class="flex-grow overflow-y-auto space-y-1.5 pr-1 text-xs md:text-sm font-medium text-emerald-200">
+                    <div class="text-emerald-400 italic text-center py-4">No moves yet</div>
                 </div>
 
                 <!-- Reset Board Buttons -->
-                <div class="pt-3 border-t border-slate-700/60 flex gap-2">
-                    <button id="resetBoardBtn" class="flex-1 py-2.5 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold text-xs transition-all shadow active:scale-95 flex items-center justify-center gap-1.5">
+                <div class="pt-3 border-t border-emerald-800/60 flex gap-2">
+                    <button id="resetBoardBtn" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-emerald-50 font-semibold text-xs transition-all shadow active:scale-95 flex items-center justify-center gap-1.5">
                         <i class="fas fa-redo-alt"></i> Reset Board
                     </button>
                     <button id="resetMatchBtn" class="py-2.5 px-3 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 font-semibold text-xs transition-all active:scale-95 flex items-center justify-center" title="Reset Scores & Game">
@@ -188,26 +188,26 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full text-center py-4 text-xs text-slate-500">
+    <footer class="w-full text-center py-4 text-xs text-emerald-400">
         Tic-Tac-Toe • 2 Players Local Gameplay
     </footer>
 
     <!-- Victory / Draw Modal Overlay -->
-    <div id="gameModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl transform scale-90 transition-transform duration-300" id="modalContent">
+    <div id="gameModal" class="fixed inset-0 bg-emerald-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-emerald-900 border border-emerald-800 rounded-3xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl transform scale-90 transition-transform duration-300" id="modalContent">
             
             <div id="winnerIconBg" class="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 shadow-lg">
                 <i id="winnerIcon" class="fas fa-trophy"></i>
             </div>
 
-            <h2 id="modalTitle" class="text-2xl font-black text-slate-100 mb-1">Player X Wins!</h2>
-            <p id="modalSubtitle" class="text-sm text-slate-400 mb-6">Congratulations on a great match!</p>
+            <h2 id="modalTitle" class="text-2xl font-black text-emerald-50 mb-1">Player X Wins!</h2>
+            <p id="modalSubtitle" class="text-sm text-emerald-300 mb-6">Congratulations on a great match!</p>
 
             <div class="flex flex-col gap-2">
-                <button id="modalNextRoundBtn" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-x to-brand-accent text-white font-bold text-sm shadow-lg shadow-purple-500/25 hover:opacity-95 transition-all active:scale-95">
+                <button id="modalNextRoundBtn" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-brand-x to-brand-accent text-white font-bold text-sm shadow-lg shadow-emerald-500/25 hover:opacity-95 transition-all active:scale-95">
                     Next Round
                 </button>
-                <button id="modalCloseBtn" class="w-full py-2.5 px-4 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 font-semibold text-xs transition-all">
+                <button id="modalCloseBtn" class="w-full py-2.5 px-4 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-emerald-200 font-semibold text-xs transition-all">
                     Close Preview
                 </button>
             </div>
@@ -356,7 +356,7 @@
             boardEl.innerHTML = '';
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement('button');
-                cell.className = `cell-hover bg-slate-800/90 hover:bg-slate-700/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-black transition-all duration-200 border border-slate-700/50 shadow-inner focus:outline-none`;
+                cell.className = `cell-hover bg-emerald-900/90 hover:bg-emerald-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-black transition-all duration-200 border border-emerald-800/50 shadow-inner focus:outline-none`;
                 cell.setAttribute('data-index', i);
                 cell.setAttribute('aria-label', `Cell ${i + 1}`);
                 cell.addEventListener('click', () => handleCellClick(i));
@@ -437,9 +437,9 @@
             // Set color based on winner
             const winnerSymbol = state.board[combo[0]];
             if (winnerSymbol === 'X') {
-                winLine.setAttribute('class', 'win-line text-brand-x drop-shadow-[0_0_12px_rgba(59,130,246,0.8)]');
+                winLine.setAttribute('class', 'win-line text-brand-x drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]');
             } else {
-                winLine.setAttribute('class', 'win-line text-brand-o drop-shadow-[0_0_12px_rgba(236,72,153,0.8)]');
+                winLine.setAttribute('class', 'win-line text-brand-o drop-shadow-[0_0_12px_rgba(163,230,53,0.8)]');
             }
         }
 
@@ -453,7 +453,7 @@
 
             // Highlight Winning Cells
             winCombo.forEach(idx => {
-                boardEl.children[idx].classList.add('bg-slate-700/90', 'ring-2', winner === 'X' ? 'ring-brand-x' : 'ring-brand-o');
+                boardEl.children[idx].classList.add('bg-emerald-800/90', 'ring-2', winner === 'X' ? 'ring-brand-x' : 'ring-brand-o');
             });
 
             sfx.playWin();
@@ -511,17 +511,17 @@
         function updateMoveLog() {
             moveCounter.textContent = `${state.moveHistory.length} Move${state.moveHistory.length === 1 ? '' : 's'}`;
             if (state.moveHistory.length === 0) {
-                moveLogList.innerHTML = `<div class="text-slate-500 italic text-center py-4">No moves yet</div>`;
+                moveLogList.innerHTML = `<div class="text-emerald-400 italic text-center py-4">No moves yet</div>`;
                 return;
             }
 
             moveLogList.innerHTML = state.moveHistory.map((item, index) => {
                 const color = item.player === 'X' ? 'text-brand-x' : 'text-brand-o';
                 return `
-                    <div class="flex items-center gap-2 bg-slate-800/60 p-2 rounded-lg border border-slate-700/40">
-                        <span class="text-[10px] text-slate-500 font-mono">#${index + 1}</span>
+                    <div class="flex items-center gap-2 bg-emerald-900/60 p-2 rounded-lg border border-emerald-800/40">
+                        <span class="text-[10px] text-emerald-400 font-mono">#${index + 1}</span>
                         <span class="font-bold ${color}">${item.player}</span>
-                        <span class="truncate text-slate-300">${item.moveText.split('->')[1]}</span>
+                        <span class="truncate text-emerald-200">${item.moveText.split('->')[1]}</span>
                     </div>
                 `;
             }).reverse().join('');
@@ -533,13 +533,13 @@
             modalSubtitle.textContent = subtitle;
 
             if (type === 'X') {
-                winnerIconBg.className = "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 bg-brand-x/20 text-brand-x border border-brand-x/30 shadow-lg shadow-blue-500/10";
+                winnerIconBg.className = "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 bg-brand-x/20 text-brand-x border border-brand-x/30 shadow-lg shadow-emerald-500/10";
                 winnerIcon.className = "fas fa-trophy";
             } else if (type === 'O') {
-                winnerIconBg.className = "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 bg-brand-o/20 text-brand-o border border-brand-o/30 shadow-lg shadow-pink-500/10";
+                winnerIconBg.className = "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 bg-brand-o/20 text-brand-o border border-brand-o/30 shadow-lg shadow-lime-500/10";
                 winnerIcon.className = "fas fa-trophy";
             } else {
-                winnerIconBg.className = "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 bg-slate-700 text-slate-300 border border-slate-600 shadow-lg";
+                winnerIconBg.className = "w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 bg-emerald-800 text-emerald-200 border border-emerald-700 shadow-lg";
                 winnerIcon.className = "fas fa-handshake";
             }
 
@@ -585,7 +585,7 @@
         // Toggle Sound Effects
         function toggleSound() {
             state.soundEnabled = !state.soundEnabled;
-            soundIcon.className = state.soundEnabled ? "fas fa-volume-up text-lg" : "fas fa-volume-mute text-lg text-slate-500";
+            soundIcon.className = state.soundEnabled ? "fas fa-volume-up text-lg" : "fas fa-volume-mute text-lg text-emerald-400";
         }
 
         // Toggle Dark / Light Theme
@@ -595,12 +595,12 @@
 
             if (state.theme === 'light') {
                 document.documentElement.classList.remove('dark');
-                body.className = "bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between transition-colors duration-300";
-                themeIcon.className = "fas fa-moon text-lg text-indigo-600";
+                body.className = "bg-emerald-50 text-emerald-950 min-h-screen flex flex-col justify-between transition-colors duration-300";
+                themeIcon.className = "fas fa-moon text-lg text-emerald-700";
             } else {
                 document.documentElement.classList.add('dark');
-                body.className = "bg-slate-900 text-slate-100 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col justify-between transition-colors duration-300";
-                themeIcon.className = "fas fa-sun text-lg text-amber-400";
+                body.className = "bg-emerald-950 text-emerald-50 dark:bg-emerald-950 dark:text-emerald-50 min-h-screen flex flex-col justify-between transition-colors duration-300";
+                themeIcon.className = "fas fa-sun text-lg text-lime-300";
             }
         }
 
